@@ -1,69 +1,37 @@
 
+#ifndef SORT_H
+#define SORT_H
 
-
-void QuickSort(int *a, int low, int hight)
+void CloneArray(int *a, int *b, int num);
+void PrintArray(int *a, int num);
+class Sort
 {
-	if (low >= hight)
-	{
-		return;
+public:
+	static Sort Instance() {
+		static Sort instance;
+		return instance;
 	}
 
-	int first = low; 
-	int last = hight;
-	int pivot = a[first];
-	while (first < last)
-	{
-		while (first < last && a[last] >= pivot)
-		{
-			--last;
-		}
-		a[first] = a[last];
-		while (first < last && a[first] <= pivot)
-		{
-			++first;
-		}
-		a[last] = a[first];
-	}
+	void PrintSort();
 
-	a[first] = pivot;
-	QuickSort(a, low, first - 1);
-	QuickSort(a, first + 1, hight);
-}
+	// ¿ìÅÅ
+	void QuickSort(int *a, int low, int hight);
+	// ²åÈë
+	void InsertSort(int *a, int low, int hight);
+	// ¶ÑÅÅÐò
+	void HeapAdjust(int *a, int low, int hight);
+	void HeapSort(int *a, int len);
+
+	//ºÏ²¢ÅÅÐò
+	void MergeArray(int *a, int *temp, int begin, int mid, int end);
+	void MergeMySort(int *a, int *temp, int begin, int end);;
+	void MergeSort(int *a, int len);
+
+	// Ã°ÅÝ
+	void BubbleSort(int *a, int len);
+};
 
 
-void InsertSort(int *a, int low, int hight)
-{
-	if (low >= hight)
-	{
-		return;
-	}
-
-	for (int i = low + 1; i <= hight; ++i)
-	{
-		if (a[i-1] > a[i])
-		{
-			int temp = a[i];
-			int j = i;
-			while (j <= hight && a[j-1] > temp)
-			{
-				a[j] = a[j-1];
-				--j;
-			}
-			a[j] = temp;
-		}
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
+#endif 
 
 

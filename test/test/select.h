@@ -1,6 +1,7 @@
 
-
 #include "sort.h"
+#include <windows.h>
+#include <time.h>  
 
 
 
@@ -78,7 +79,7 @@ int FindMid(int *a, int low, int hight)
 {
 	for (int i = low; i < hight - 5; i += 5)
 	{
-		int m = partition(a, i, i+4);
+		Sort::Instance().InsertSort(a, i, i+4);
 
 		int mid_i = (i - low)/5 + low;
 		int temp = a[mid_i];
@@ -89,7 +90,7 @@ int FindMid(int *a, int low, int hight)
 	if ((hight-low+1)%5 != 0)
 	{
 		int i = hight - (hight-low+1)%5 + 1;
-		int m = partition(a, i, hight);
+		Sort::Instance().InsertSort(a, i, hight);
 
 		int mid_me = (hight - i)/2 + i;
 		int mid_i = (i - low)/5 + low;
@@ -127,4 +128,56 @@ int BFPRTSelect(int *a, int low, int hight, int k)
 	{
 		return BFPRTSelect(a, m + 1, hight, k - i);
 	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+void PrintSelect()
+{
+	printf("PrintSelect Start\n");
+	static const int num = 100000;
+	int *a = new int[num];
+	int *b = new int[num];
+
+	for (int i = 0; i < num; ++i)
+	{
+		b[i] = rand()%num; //num-i;
+	}
+
+	time_t start = clock();
+	time_t end = clock();
+
+
+	int find_num = rand()%num+1;
+	printf("the find_num is :%d\n", find_num);
+
+	CloneArray(a, b, num);
+	start = clock();
+	int key = QuickSelect(a, 0, num-1, find_num);
+	end = clock();
+	printf("QuickSelect = %d\n", key);
+	printf("the running time is :%f\n", double(end -start)/CLOCKS_PER_SEC);
+
+	CloneArray(a, b, num);
+	start = clock();
+	key = BFPRTSelect(a, 0, num-1, find_num);
+	end = clock();
+	printf("BFPRTSelect = %d\n", key);
+	printf("the running time is :%f\n", double(end -start)/CLOCKS_PER_SEC);
+
+	delete[] a;
+	delete[] b;
+
+	printf("PrintSelect End\n");
+	system("pause");
 }
